@@ -67,7 +67,7 @@ export default function Home() {
           <span>Balls</span>
         </h1>
         <p className="subtitle">
-          Help Elon Musk catch falling balls and save the Budget! A fast-paced doge-themed arcade game. Miss three and it\'s game over — how much can you save?
+          Help Elon Musk catch falling balls and save the Budget! A fast-paced doge-themed arcade game. Miss three and it's game over — how much can you save?
         </p>
         <div className="cta-group">
           <a href="#download" className="btn btn-primary">Download</a>
@@ -93,7 +93,7 @@ export default function Home() {
 
       <section className="features" id="features">
         <div className="features-header">
-          <p className="section-label">Why You\'ll Love It</p>
+          <p className="section-label">Why You'll Love It</p>
           <h2 className="section-title">Features</h2>
         </div>
         <div className="features-grid">
