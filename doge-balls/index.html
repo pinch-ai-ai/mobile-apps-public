@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>D.O.G.E. Balls – Catch Balls, Save the Budget!</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #f5c518;
+      --gold-dark: #d4a017;
+      --bg: #0d0d0d;
+      --bg-card: #1a1a1a;
+      --text: #f0f0f0;
+      --text-muted: #888;
+      --radius: 16px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      height: 60px;
+      background: rgba(13,13,13,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid #222;
+    }
+    .nav-logo {
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: 0.05em;
+      color: var(--gold);
+    }
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* ── HERO ── */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 5rem 2rem 4rem;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: #1e1e1e;
+      border: 1px solid #333;
+      border-radius: 100px;
+      padding: 0.3rem 1rem;
+      font-size: 0.8rem;
+      color: var(--gold);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+    .hero h1 span { color: var(--gold); }
+    .hero .subtitle {
+      margin-top: 1.25rem;
+      max-width: 520px;
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+    .cta-group {
+      margin-top: 2.5rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.8rem 1.8rem;
+      border-radius: 100px;
+      font-weight: 700;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: transform 0.15s, box-shadow 0.15s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
+    .btn-primary { background: var(--gold); color: #000; }
+    .btn-outline { background: transparent; color: var(--text); border: 2px solid #333; }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* ── SCREENSHOTS ── */
+    .screenshots {
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+    .section-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 800;
+      letter-spacing: -0.01em;
+    }
+    .screenshots-row {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      margin-top: 3rem;
+      flex-wrap: wrap;
+    }
+    .screenshot-frame {
+      width: 220px;
+      height: 476px;
+      background: var(--bg-card);
+      border-radius: 36px;
+      border: 2px solid #2a2a2a;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      position: relative;
+    }
+    .screenshot-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .screenshot-frame .placeholder-text {
+      color: #333;
+      font-size: 0.8rem;
+      text-align: center;
+      padding: 1rem;
+    }
+    /* landscape frames */
+    .screenshot-frame.landscape {
+      width: 476px;
+      height: 220px;
+      border-radius: 20px;
+    }
+    @media (max-width: 600px) {
+      .screenshot-frame.landscape { width: 100%; max-width: 340px; height: auto; aspect-ratio: 16/7; }
+    }
+
+    /* ── FEATURES ── */
+    .features {
+      padding: 5rem 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .features-header { text-align: center; margin-bottom: 3rem; }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid #222;
+      border-radius: var(--radius);
+      padding: 1.75rem;
+    }
+    .feature-icon {
+      font-size: 2rem;
+      margin-bottom: 0.75rem;
+    }
+    .feature-card h3 { font-size: 1.1rem; margin-bottom: 0.4rem; }
+    .feature-card p { color: var(--text-muted); font-size: 0.9rem; }
+
+    /* ── DOWNLOAD ── */
+    .download {
+      text-align: center;
+      padding: 5rem 2rem;
+    }
+    .download h2 { font-size: clamp(1.8rem, 5vw, 2.8rem); font-weight: 800; }
+    .download p { color: var(--text-muted); margin-top: 0.75rem; }
+    .store-badges {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+    .store-badge {
+      display: inline-flex;
+      align-items: center;
+      /* gap: 0.75rem; */
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 8px;
+      /* padding: 0.75rem 1.5rem; */
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.2s, transform 0.15s;
+    }
+    .store-badge:hover { border-color: var(--gold); transform: translateY(-2px); }
+    .store-badge .store-icon { font-size: 1.8rem; }
+    .store-badge .store-text { display: flex; flex-direction: column; text-align: left; }
+    .store-badge .store-small { font-size: 0.7rem; color: var(--text-muted); }
+    .store-badge .store-name { font-size: 1rem; font-weight: 700; }
+
+
+    /* ── FOOTER ── */
+    footer {
+      background: #0d0d0d;
+      border-top: 1px solid #1c1c1c;
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+    footer a { color: var(--text-muted); text-decoration: none; }
+    footer a:hover { color: var(--gold); }
+    .footer-links { display: flex; gap: 1.5rem; justify-content: center; margin-bottom: 0.75rem; flex-wrap: wrap; }
+
+    /* ── DIVIDER ── */
+    .divider { height: 1px; background: #1e1e1e; max-width: 900px; margin: 0 auto; }
+
+    @media (max-width: 600px) {
+      nav { padding: 0 1rem; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">D.O.G.E. BALLS</span>
+  <ul class="nav-links">
+    <li><a href="#screenshots">Screenshots</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#download">Download</a></li>
+    <li><a href="privacy_policy.txt">Privacy</a></li>
+    <li><a href="terms_of_use.txt">Terms</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <span class="hero-badge">Available on the App Store</span>
+  <h1>D.O.G.E.<br /><span>Balls</span></h1>
+  <p class="subtitle">
+    Help Elon Musk catch falling balls and save the Budget! A fast-paced doge-themed arcade game. Miss three and it's game over — how much can you save?
+  </p>
+  <div class="cta-group">
+    <a href="#download" class="btn btn-primary">Download</a>
+    <a href="#screenshots" class="btn btn-outline">See Screenshots</a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SCREENSHOTS -->
+<section class="screenshots" id="screenshots">
+  <p class="section-label">In Action</p>
+  <h2 class="section-title">See the Game</h2>
+  <div class="screenshots-row" style="flex-direction: column; align-items: center;">
+    <div class="screenshot-frame landscape">
+      <img src="screenshots/game_screen_iPhone_17_Pro.png" alt="D.O.G.E. Balls gameplay" />
+    </div>
+    <div class="screenshot-frame landscape">
+      <img src="screenshots/info_screen_iPhone_17_Pro.png" alt="D.O.G.E. Balls help screen" />
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="features-header">
+    <p class="section-label">Why You'll Love It</p>
+    <h2 class="section-title">Features</h2>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">🎮</div>
+      <h3>Simple Controls</h3>
+      <p>Tap four buttons to move Elon across shelves. Pick up in seconds, hard to put down.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📈</div>
+      <h3>Progressive Difficulty</h3>
+      <p>Play starts with one ball and scale up to four simultaneous balls as your score grows. Stay sharp!</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔊</div>
+      <h3>3-Mode Sound System</h3>
+      <p>Off, basic, or full effects — cycle with a tap. Rich sounds: catches, drops, whooshes, and a sad trombone on game over.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🏆</div>
+      <h3>High Score Tracking</h3>
+      <p>Your best "Budget Saved" is auto-saved between sessions. Can you beat your own record?</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🎱</div>
+      <h3>Branded Balls</h3>
+      <p>Unique ball-logo designs appear at random. Catch them all!</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🥚</div>
+      <h3>Easter Eggs</h3>
+      <p>Hidden surprises are waiting to be discovered. You'll know when you find one.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- DOWNLOAD -->
+<section class="download" id="download">
+  <p class="section-label">Get the App</p>
+  <h2>Download Now</h2>
+  <p>Available on iPhone, iPad, and Mac.</p>
+  <div class="store-badges">
+    <a href="#" class="store-badge" aria-label="Download on the App Store">
+      <img src="Download_on_the_App_Store_Badge_US-UK_RGB_blk_092917.svg" alt="App Store Badge" class="store-icon" />
+    </a>
+    <a href="#" class="store-badge" aria-label="Download on the Mac App Store">
+      <img src="Download_on_the_Mac_App_Store_Badge_US-UK_RGB_blk_092917.svg" alt="Mac App Store Badge" class="store-icon" />
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-links">
+    <a href="privacy_policy.txt">Privacy Policy</a>
+    <a href="terms_of_use.txt">Terms of Use</a>
+    <a href="mailto:appsupport@ulanoff.com">Contact</a>
+  </div>
+  <p>&copy; 2026 RUS GraFX. All rights reserved.</p>
+</footer>
+
+
+</body>
+</html>
